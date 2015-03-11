@@ -108,6 +108,11 @@ static NSTimeInterval const kImageRetryDelay = 2.5;
     request.timeoutInterval = [self imageRequestTimeout];
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
     
+    NSString *userAgent = ({
+        [NSString stringWithFormat:@"%@/%@ (%@; iOS %@; Scale/%0.2f)", [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleExecutableKey] ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleIdentifierKey], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleVersionKey], [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion], [[UIScreen mainScreen] scale]];
+    });
+    [request addValue:userAgent forHTTPHeaderField:@"User-Agent"];
+
     return _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
 }
 

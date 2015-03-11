@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
     :path: ../.
 
 SPEC CHECKSUMS:
-  LRImageManager: e2ee4fbf1fed61af403b59435fc4f45e71ddb89d
+  LRImageManager: 2df0d12a5d95313e7eaf087f5c64fdaec9181742
   Reachability: 8e9635e3cb4f98e7f825e51147f677ecc694d0e7
 
-COCOAPODS: 0.33.1
+COCOAPODS: 0.35.0
