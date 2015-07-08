@@ -109,7 +109,18 @@ static NSTimeInterval const kImageRetryDelay = 2.5;
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
     
     NSString *userAgent = ({
-        [NSString stringWithFormat:@"%@/%@ (%@; iOS %@; Scale/%0.2f)", [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleExecutableKey] ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleIdentifierKey], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleVersionKey], [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion], [[UIScreen mainScreen] scale]];
+        NSDictionary *infoDict = [NSBundle mainBundle].infoDictionary;
+        NSString *bundleExecutableKey = infoDict[(id)kCFBundleExecutableKey];
+        NSString *bundleIdentifierKey = infoDict[(id)kCFBundleIdentifierKey];
+        NSString *bundleShortVersion = infoDict[@"CFBundleShortVersionString"];
+        NSString *bundleVersion = infoDict[(id)kCFBundleVersionKey];
+        NSString *userAgent = [NSString stringWithFormat:@"%@/%@ (%@; iOS %@; Scale/%0.2f)",
+                               bundleExecutableKey ?: bundleIdentifierKey,
+                               bundleShortVersion ?: bundleVersion,
+                               [[UIDevice currentDevice] model],
+                               [[UIDevice currentDevice] systemVersion],
+                               [[UIScreen mainScreen] scale]];
+        userAgent;
     });
     [request addValue:userAgent forHTTPHeaderField:@"User-Agent"];
 
