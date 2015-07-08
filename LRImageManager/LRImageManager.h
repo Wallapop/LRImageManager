@@ -21,6 +21,7 @@
 // THE SOFTWARE.
 
 #import "LRImageCache.h"
+#import "LRImageManagerDebug.h"
 
 extern NSString *const LRImageManagerDidStartLoadingImageNotification;
 extern NSString *const LRImageManagerDidStopLoadingImageNotification;

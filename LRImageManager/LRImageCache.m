@@ -21,16 +21,9 @@
 // THE SOFTWARE.
 
 #import "LRImageCache.h"
+#import "LRImageManagerDebug.h"
 #import "UIImage+LRImageManagerAdditions.h"
 #import <CommonCrypto/CommonCrypto.h>
-
-#if DEBUG
-#define LRImageManagerLog(s,...) NSLog( @"\n\n------------------------------------- DEBUG -------------------------------------\n\t<%p %@:(%d)>\n\n\t%@\n---------------------------------------------------------------------------------\n\n", self, \
-[[NSString stringWithUTF8String:__FUNCTION__] lastPathComponent], __LINE__, \
-[NSString stringWithFormat:(s), ##__VA_ARGS__] )
-#else
-#define LRImageManagerLog(s,...)
-#endif
 
 static const NSTimeInterval kDefaultMaxTimeInCache = 60 * 60 * 24 * 7; // 1 week
 static const unsigned long long kDefaultMaxCacheDirectorySize = 100 * 1024 * 1024; // 100 MB
@@ -248,11 +241,11 @@ cacheStorageOptions:(LRCacheStorageOptions)cacheStorageOptions
                                          attributes:nil
                                               error:&error])
             {
-                LRImageManagerLog(@"Error creating cache directory at path: %@ | error: %@", imageCacheDirectoryPath, [error localizedDescription]);
+                LRI_LOG(@"Error creating cache directory at path: %@ | error: %@", imageCacheDirectoryPath, [error localizedDescription]);
             }
             else
             {
-                LRImageManagerLog(@"Cache directory successfully created at path: %@", imageCacheDirectoryPath);
+                LRI_LOG(@"Cache directory successfully created at path: %@", imageCacheDirectoryPath);
             }
         }
         
@@ -264,11 +257,11 @@ cacheStorageOptions:(LRCacheStorageOptions)cacheStorageOptions
             
             if (![fileManager createFileAtPath:filePath contents:data attributes:nil])
             {
-                LRImageManagerLog(@"Error caching image at path: %@", filePath);
+                LRI_LOG(@"Error caching image at path: %@", filePath);
             }
             else
             {
-                LRImageManagerLog(@"Image successfully cached at path: %@", filePath);
+                LRI_LOG(@"Image successfully cached at path: %@", filePath);
             }
         }
     });
@@ -304,11 +297,11 @@ cacheStorageOptions:(LRCacheStorageOptions)cacheStorageOptions
         
         if (![fileManager removeItemAtPath:self.pathToImageCacheDirectory error:&error])
         {
-            LRImageManagerLog(@"Error deleting cache directory at path: %@ | error: %@", self.pathToImageCacheDirectory, [error localizedDescription]);
+            LRI_LOG(@"Error deleting cache directory at path: %@ | error: %@", self.pathToImageCacheDirectory, [error localizedDescription]);
         }
         else
         {
-            LRImageManagerLog(@"Cache directory removed successfully");
+            LRI_LOG(@"Cache directory removed successfully");
         }
     });
 }
@@ -324,11 +317,11 @@ cacheStorageOptions:(LRCacheStorageOptions)cacheStorageOptions
         
         if (![fileManager removeItemAtPath:filePath error:&error])
         {
-            LRImageManagerLog(@"Error deleting cache file at path: %@ | error: %@", filePath, [error localizedDescription]);
+            LRI_LOG(@"Error deleting cache file at path: %@ | error: %@", filePath, [error localizedDescription]);
         }
         else
         {
-            LRImageManagerLog(@"Cache file removed successfully at path: %@", filePath);
+            LRI_LOG(@"Cache file removed successfully at path: %@", filePath);
         }
     });
 }
@@ -356,11 +349,11 @@ cacheStorageOptions:(LRCacheStorageOptions)cacheStorageOptions
                 
                 if (![fileManager removeItemAtPath:filePath error:&error])
                 {
-                    LRImageManagerLog(@"Error deleting file item at path: %@ | error: %@", filePath, [error localizedDescription]);
+                    LRI_LOG(@"Error deleting file item at path: %@ | error: %@", filePath, [error localizedDescription]);
                 }
                 else
                 {
-                    LRImageManagerLog(@"File item removed successfully at path: %@", filePath);
+                    LRI_LOG(@"File item removed successfully at path: %@", filePath);
                 }
             }
         }

@@ -57,6 +57,8 @@ NSString *const LRImageManagerSizeUserInfoKey = @"LRImageManagerSizeUserInfoKey"
     return sharedManager;
 }
 
+#pragma mark - Init
+
 - (instancetype)init
 {
     self = [super init];
@@ -71,6 +73,8 @@ NSString *const LRImageManagerSizeUserInfoKey = @"LRImageManagerSizeUserInfoKey"
     
     return self;
 }
+
+#pragma mark - Requests
 
 - (void)imageFromURL:(NSURL *)url
                 size:(CGSize)size
